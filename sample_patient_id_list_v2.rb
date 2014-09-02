@@ -4,7 +4,9 @@
 #------ 患者番号一覧取得
 require 'uri'
 require 'net/http'
-
+require 'pp'
+require 'crack' # for xml and json
+require 'crack/xml' # for just xml
 Net::HTTP.version_1_2
 
 HOST = "192.168.4.123"
@@ -30,10 +32,6 @@ BODY = <<EOF
 EOF
 
 def list_patient(body)
-  require 'pp'
-  require 'crack' # for xml and json
-  require 'crack/xml' # for just xml
-
   root = Crack::XML.parse(body)
   result = root["xmlio2"]["patientlst1res"]["Api_Result"]
   unless result == "00"
@@ -44,13 +42,18 @@ def list_patient(body)
   pinfo = root["xmlio2"]["patientlst1res"]["Patient_Information"]
   pinfo.each do |patient|
     puts "=========="
-    puts patient["Patient_ID"]
-    puts patient["WholeName"]
-    puts patient["WholeName_inKana"]
-    puts patient["BirthDate"]
-    puts patient["Sex"]
-    puts patient["CreateDate"]
-    puts patient["UpdateDate"]
+    puts "Patient_ID:      #{patient["Patient_ID"]}"
+    puts "WholeName:       #{patient["WholeName"]}"
+    puts "WholeName_inkana:#{patient["WholeName_inKana"]}"
+    puts "BirthDate:       #{patient["BirthDate"]}"
+    if patient["Sex"] == "1"
+      patient["Sex"] = "男"
+    else
+      patient["Sex"] = "女"
+    end
+    puts "Sex:             #{patient["Sex"]}"
+    puts "CreateDate:      #{patient["CreateDate"]}"
+    puts "UpdateDate:      #{patient["UpdateDate"]}"
     puts "=========="
     puts
   end
