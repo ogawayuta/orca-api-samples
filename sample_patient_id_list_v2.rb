@@ -21,11 +21,16 @@ req = Net::HTTP::Post.new("/api01rv2/patientlst1v2?class=01")
 # class :02 新規対象
 #
 #
+start_date = ARGV[0]
+end_date = ARGV[1]
+puts "開始日:#{start_date}"
+puts "終了日:#{end_date}"
+
 BODY = <<EOF
 <data>
         <patientlst1req type="record">
-                <Base_StartDate type="string">2012-06-01</Base_StartDate>
-                <Base_EndDate type="string">2014-09-30</Base_EndDate>
+                <Base_StartDate type="string">#{start_date}</Base_StartDate>
+                <Base_EndDate type="string">#{end_date}</Base_EndDate>
                 <Contain_TestPatient_Flag type="string">1</Contain_TestPatient_Flag>
         </patientlst1req>
 </data>
