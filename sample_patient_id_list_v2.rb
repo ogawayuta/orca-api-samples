@@ -23,8 +23,8 @@ req = Net::HTTP::Post.new("/api01rv2/patientlst1v2?class=01")
 #
 start_date = ARGV[0]
 end_date = ARGV[1]
-puts "開始日:#{start_date}"
-puts "終了日:#{end_date}"
+#puts "開始日:#{start_date}"
+#puts "終了日:#{end_date}"
 
 BODY = <<EOF
 <data>
@@ -46,21 +46,22 @@ def list_patient(body)
 
   pinfo = root["xmlio2"]["patientlst1res"]["Patient_Information"]
   pinfo.each do |patient|
-    puts "=========="
-    puts "Patient_ID:      #{patient["Patient_ID"]}"
-    puts "WholeName:       #{patient["WholeName"]}"
-    puts "WholeName_inkana:#{patient["WholeName_inKana"]}"
-    puts "BirthDate:       #{patient["BirthDate"]}"
-    if patient["Sex"] == "1"
-      patient["Sex"] = "男"
-    else
-      patient["Sex"] = "女"
-    end
-    puts "Sex:             #{patient["Sex"]}"
-    puts "CreateDate:      #{patient["CreateDate"]}"
-    puts "UpdateDate:      #{patient["UpdateDate"]}"
-    puts "=========="
-    puts
+    puts "#{patient["Patient_ID"]} #{patient["WholeName"]} #{patient["WholeName_inKana"]} #{patient["BirthDate"]} #{patient["Sex"]}"
+    #puts "=========="
+    #puts "Patient_ID:      #{patient["Patient_ID"]}"
+    #puts "WholeName:       #{patient["WholeName"]}"
+    #puts "WholeName_inkana:#{patient["WholeName_inKana"]}"
+    #puts "BirthDate:       #{patient["BirthDate"]}"
+    #if patient["Sex"] == "1"
+     # patient["Sex"] = "男"
+    #else
+     # patient["Sex"] = "女"
+    #end
+    #puts "Sex:             #{patient["Sex"]}"
+    #puts "CreateDate:      #{patient["CreateDate"]}"
+    #puts "UpdateDate:      #{patient["UpdateDate"]}"
+    #puts "=========="
+    #puts
   end
 end
 
